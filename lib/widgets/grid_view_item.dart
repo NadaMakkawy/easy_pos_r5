@@ -5,12 +5,14 @@ class GridViewItem extends StatelessWidget {
   final String label;
   final IconData iconData;
   final void Function()? onPressed;
-  const GridViewItem(
-      {required this.label,
-      required this.color,
-      required this.iconData,
-      required this.onPressed,
-      super.key});
+
+  const GridViewItem({
+    required this.label,
+    required this.color,
+    required this.iconData,
+    required this.onPressed,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

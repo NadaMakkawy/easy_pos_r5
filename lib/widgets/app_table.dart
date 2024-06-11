@@ -5,29 +5,32 @@ class AppTable extends StatelessWidget {
   final List<DataColumn> columns;
   final DataTableSource source;
   final double minWidth;
-  const AppTable(
-      {required this.columns,
-      required this.source,
-      this.minWidth = 600,
-      super.key});
+
+  const AppTable({
+    required this.columns,
+    required this.source,
+    this.minWidth = 600,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return PaginatedDataTable2(
-        empty: const Center(
-          child: Text('No Data Found'),
-        ),
-        renderEmptyRowsInTheEnd: false,
-        isHorizontalScrollBarVisible: true,
-        minWidth: minWidth,
-        wrapInCard: false,
-        rowsPerPage: 15,
-        headingTextStyle: const TextStyle(color: Colors.white, fontSize: 18),
-        headingRowColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-        border: TableBorder.all(),
-        columnSpacing: 20,
-        horizontalMargin: 20,
-        columns: columns,
-        source: source);
+      empty: const Center(
+        child: Text('No Data Found'),
+      ),
+      renderEmptyRowsInTheEnd: false,
+      isHorizontalScrollBarVisible: true,
+      minWidth: minWidth,
+      wrapInCard: false,
+      rowsPerPage: 15,
+      headingTextStyle: const TextStyle(color: Colors.white, fontSize: 18),
+      headingRowColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
+      border: TableBorder.all(),
+      columnSpacing: 20,
+      horizontalMargin: 20,
+      columns: columns,
+      source: source,
+    );
   }
 }

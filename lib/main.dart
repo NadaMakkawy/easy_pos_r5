@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, deviceType) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Easy Pos',
+          title: 'Easy POS',
           theme: ThemeData(
             appBarTheme: const AppBarTheme(
               backgroundColor: Color(0xff0157db),

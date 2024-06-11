@@ -13,7 +13,11 @@ import 'package:get_it/get_it.dart';
 
 class ProductOpsPage extends StatefulWidget {
   final Product? product;
-  const ProductOpsPage({this.product, super.key});
+
+  const ProductOpsPage({
+    this.product,
+    super.key,
+  });
 
   @override
   State<ProductOpsPage> createState() => _ProductOpsPageState();

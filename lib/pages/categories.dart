@@ -191,10 +191,12 @@ class CategoriesTableSource extends DataTableSource {
 
   void Function(CategoryData) onUpdate;
   void Function(CategoryData) onDelete;
-  CategoriesTableSource(
-      {required this.categoriesEx,
-      required this.onUpdate,
-      required this.onDelete});
+
+  CategoriesTableSource({
+    required this.categoriesEx,
+    required this.onUpdate,
+    required this.onDelete,
+  });
 
   @override
   DataRow? getRow(int index) {

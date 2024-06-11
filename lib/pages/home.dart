@@ -5,6 +5,8 @@ import '../pages/categories.dart';
 import '../widgets/grid_view_item.dart';
 import '../pages/clients.dart';
 import '../pages/products.dart';
+import '../pages/all_sales.dart';
+import '../pages/sale_ops.page.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:sizer/sizer.dart';
@@ -209,7 +211,10 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.orange,
                   iconData: Icons.calculate,
                   label: 'All Sales',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => const AllSales()));
+                  },
                 ),
                 GridViewItem(
                   color: Colors.pink,
@@ -241,7 +246,10 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.green,
                   iconData: Icons.point_of_sale,
                   label: 'New Sale',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => const SaleOpsPage()));
+                  },
                 ),
                 GridViewItem(
                   color: Colors.yellow,
