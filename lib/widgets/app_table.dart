@@ -5,11 +5,15 @@ class AppTable extends StatelessWidget {
   final List<DataColumn> columns;
   final DataTableSource source;
   final double minWidth;
+  final bool? sortAscending;
+  final int? sortColumnIndex;
 
   const AppTable({
     required this.columns,
     required this.source,
     this.minWidth = 600,
+    this.sortAscending,
+    this.sortColumnIndex,
     super.key,
   });
 
@@ -31,6 +35,8 @@ class AppTable extends StatelessWidget {
       horizontalMargin: 20,
       columns: columns,
       source: source,
+      sortAscending: sortAscending ?? false,
+      sortColumnIndex: sortColumnIndex,
     );
   }
 }

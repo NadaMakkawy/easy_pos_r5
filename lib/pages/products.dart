@@ -18,10 +18,53 @@ class ProductsPage extends StatefulWidget {
 
 class _ProductsPageState extends State<ProductsPage> {
   List<Product>? products;
+  int? _sortColumnIndex;
+  bool _sortAscending = true;
+
   @override
   void initState() {
     getProducts();
     super.initState();
+  }
+
+  //
+  // void _sortName<T>(Function(Product d) getField, int columnIndex,
+  //     {bool ascending = true}) {
+  //   products!.sort((a, b) {
+  //     final aValue = getField(a);
+  //     final bValue = getField(b);
+  //     if (aValue == null || bValue == null) {
+  //       return 0;
+  //     }
+  //     return ascending
+  //         ? Comparable.compare(aValue, bValue)
+  //         : Comparable.compare(bValue, aValue);
+  //   });
+  // }
+
+  //
+  // void _sortName<T>(Function(Product d) getField, int columnIndex,
+  //     {bool ascending = true}) {
+  //   ascending
+  //       ? products!.sort((a, b) => a.name!.compareTo(b.name!))
+  //       : products!.sort((a, b) => b.name!.compareTo(a.name!));
+  // }
+  //
+
+  void _sort<T>(
+    Function(Product d) getField,
+    int columnIndex, {
+    bool ascending = true,
+  }) {
+    products!.sort(
+      (a, b) {
+        final aValue = getField(a);
+        final bValue = getField(b);
+        return ascending
+            ? aValue!.compareTo(bValue)
+            : bValue!.compareTo(aValue);
+      },
+    );
   }
 
   void getProducts() async {
@@ -99,38 +142,66 @@ class _ProductsPageState extends State<ProductsPage> {
               height: 10,
             ),
             Expanded(
-                child: AppTable(
-                    minWidth: 1300,
-                    columns: const [
-                      DataColumn(label: Text('Id')),
-                      DataColumn(label: Text('Name')),
-                      DataColumn(label: Text('Description')),
-                      DataColumn(label: Text('Price')),
-                      DataColumn(label: Text('Stock')),
-                      DataColumn(label: Text('isAvailable')),
-                      DataColumn(label: Center(child: Text('image'))),
-                      DataColumn(label: Text('categoryId')),
-                      DataColumn(label: Text('categoryName')),
-                      DataColumn(label: Text('categoryDesc')),
-                      DataColumn(label: Center(child: Text('Actions'))),
-                    ],
-                    source: ProductsSource(
-                      productsEx: products,
-                      onUpdate: (productData) async {
-                        var result = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (ctx) => ProductOpsPage(
-                                      product: productData,
-                                    )));
-                        if (result ?? false) {
-                          getProducts();
-                        }
-                      },
-                      onDelete: (productData) {
-                        onDeleteRow(productData.id!);
-                      },
-                    ))),
+              child: AppTable(
+                minWidth: 1300,
+                columns: [
+                  const DataColumn(label: Text('Id')),
+                  DataColumn(
+                    label: const Text('Name'),
+                    onSort: (columnIndex, ascending) {
+                      _sortColumnIndex = columnIndex;
+                      _sortAscending = ascending;
+                      _sort<String>(
+                        (d) => d.name!,
+                        columnIndex,
+                        ascending: ascending,
+                      );
+                      setState(() {});
+                    },
+                  ),
+                  const DataColumn(label: Text('Description')),
+                  DataColumn(
+                    label: const Text('Price'),
+                    onSort: (columnIndex, ascending) {
+                      _sortColumnIndex = columnIndex;
+                      _sortAscending = ascending;
+                      _sort<double>(
+                        (d) => d.price!,
+                        columnIndex,
+                        ascending: ascending,
+                      );
+                      setState(() {});
+                    },
+                  ),
+                  const DataColumn(label: Text('Stock')),
+                  const DataColumn(label: Text('isAvailable')),
+                  const DataColumn(label: Center(child: Text('image'))),
+                  const DataColumn(label: Text('categoryId')),
+                  const DataColumn(label: Text('categoryName')),
+                  const DataColumn(label: Text('categoryDesc')),
+                  const DataColumn(label: Center(child: Text('Actions'))),
+                ],
+                source: ProductsSource(
+                  productsEx: products,
+                  onUpdate: (productData) async {
+                    var result = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (ctx) => ProductOpsPage(
+                                  product: productData,
+                                )));
+                    if (result ?? false) {
+                      getProducts();
+                    }
+                  },
+                  onDelete: (productData) {
+                    onDeleteRow(productData.id!);
+                  },
+                ),
+                sortAscending: _sortAscending,
+                sortColumnIndex: _sortColumnIndex,
+              ),
+            ),
           ],
         ),
       ),
